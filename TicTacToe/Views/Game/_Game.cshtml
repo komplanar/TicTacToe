@@ -1,0 +1,51 @@
+﻿@using TicTacToe.Models;
+@{
+    bool IsPlayerFirst = (bool)Session["IsPlayerFirst"];
+ }
+@if (ViewBag.Status == Game.State.UserWin)
+{
+    <div id="Status" class="game-status" style="color: green">You WIN!</div>
+}
+else if (ViewBag.Status == Game.State.UserLose)
+{
+    <div id="Status" class="game-status" style="color: red">You LOSE!</div>
+}
+else if (ViewBag.Status == Game.State.Draw)
+{
+    <div id="Status" class="game-status">Draw!</div>
+}
+else
+{
+    <div id="Status" class="game-status"></div>
+}
+<div id="WhoAreYou" class="game-status user-turn" style="">You play as a <b>"@(IsPlayerFirst ? "X" : "O")"</b></div>
+<div class="game-field">
+    @{
+        
+        foreach (var cell in (Dictionary<int, CellValue>)ViewBag.State)
+        {
+            string style = "";
+            string symbol = "";
+            string clas = "";
+
+
+            if (cell.Key % 3 == 0)
+            {
+                style = "clear: left;";
+            }
+
+            if (cell.Value == CellValue.BOT)
+            {
+                clas = "bot-turn";
+                symbol = IsPlayerFirst ? "O" : "X"; ;
+            }
+            else if (cell.Value == CellValue.USER)
+            {
+                clas = "user-turn";
+                symbol = IsPlayerFirst ? "X" : "O"; ;
+            }
+
+            <div position="@cell.Key" class="field-inside @clas" style="@style">@symbol</div>
+        }
+    }
+</div>

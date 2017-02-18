@@ -1,0 +1,47 @@
+﻿@using TicTacToe.Models;
+@model IEnumerable<Game>
+@{
+    ViewBag.Title = "History";
+}
+
+<div>
+    @{
+        foreach (var game in Model)
+        {
+            bool IsPlayerFirst = game.Turns.Count > 0 ? game.Turns.FirstOrDefault().IsPlayer : true;
+            <h4>@game.DateOfStart</h4>
+            <div>
+                <p>
+                    @foreach (var turn in game.Turns)
+                    {
+                        if (turn.IsPlayer == true)
+                        {
+                            <span class="user-turn"> <b>@(IsPlayerFirst ? "X" : "O"):@turn.Cell</b> </span>
+                        }
+                        else
+                        {
+                            <span class="bot-turn"> @(IsPlayerFirst ? "O" : "X"):@turn.Cell </span>
+                        }
+                    }
+                </p>
+            </div>
+            if (game.Result == Game.State.UserLose)
+            {
+                <h4 style="color: #920000">Result: <b>You lose</b></h4>
+            }
+            else if (game.Result == Game.State.UserWin)
+            {
+                <h4 style="color: #1cad05">Result: <b>You win!</b></h4>
+            }
+            else if (game.Result == Game.State.Draw)
+            {
+                <h4 style="color: #f25f0a">Result: <b>Draw</b></h4>
+            }
+            else if (game.Result == Game.State.NotFinish)
+            {
+                <h4>Result: <b>Game canceled</b></h4>
+            }
+            <hr />
+        }
+    }
+</div>

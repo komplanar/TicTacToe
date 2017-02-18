@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "Tic-Tac-Toe";
+    bool IsPlayerFirst = (bool)Session["IsPlayerFirst"];
+}
+@using TicTacToe.Models;
+<div class="game-div">
+    <div id="GameId" style="display: none" data-id="@ViewBag.Id"></div>
+    <div id="game-field">
+        <div id="Status" class="game-status"></div>
+        <div id="WhoAreYou" class="game-status user-turn" style="">You play as a <b>"@(IsPlayerFirst ? "X" : "O")"</b></div>
+        <div class="game-field">
+            @{
+                foreach (var cell in (Dictionary<int, CellValue>) ViewBag.State)
+                {
+                    string style = "";
+                    string symbol = "";
+                    string clas = "";
+
+
+                    if (cell.Key % 3 == 0)
+                    {
+                        style = "clear: left;";
+                    }
+
+                    if (cell.Value == CellValue.BOT)
+                    {
+                        clas = "bot-turn";
+
+                        symbol = IsPlayerFirst ? "O" : "X";
+                    }
+                    else if (cell.Value == CellValue.USER)
+                    {
+                        clas = "user-turn";
+                        symbol = IsPlayerFirst ? "X" : "O";
+                    }
+
+                    <div position="@cell.Key" class="field-inside @clas" style="@style">@symbol</div>
+            }
+            }
+        </div>
+    </div>
+</div>
+

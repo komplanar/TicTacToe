@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "Login";
+}
+@model TicTacToe.Models.User
+<div>
+    @using (Html.BeginForm("Login", "Game", FormMethod.Post, new { @class = "login-form" }))
+    {
+        <div>
+            @Html.LabelFor(model => model.Name, "Enter your name")
+        </div>
+        <div class="login-input">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name,"",new { style="color: red"})
+        </div>
+        <p><input class="btn btn-success" type="submit" value="Login" /></p>
+    }
+</div>
