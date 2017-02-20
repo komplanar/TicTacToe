@@ -2,3 +2,5 @@ packages/
 obj/
 .vs/
 bin/
+.mdf
+.ldf
