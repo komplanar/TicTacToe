@@ -4,9 +4,6 @@ namespace TicTacToe.Repositories
 {
     public class EfUnitOfWork : IUnitOfWork
     {
-        /*Тут
-                надо бы
-                            покопаться*/
         private GameContext _db;
         private UserSQLRepository _userSQLRepository;
         private GameSQLRepository _gameSQLRepository;

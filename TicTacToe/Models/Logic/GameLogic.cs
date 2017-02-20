@@ -31,15 +31,6 @@ namespace TicTacToe.Models
             }
             return false;
         }
-        /*поменять реализацию,
-                                пока рандом*/
-        public int BotMove2()
-        {
-            List<int> availableMoves = GetAvailableMoves();
-            int res = availableMoves[new Random().Next(availableMoves.Count())];
-            CellState[res] = CellValue.BOT;
-            return res;
-        }
 
         public List<int> GetAvailableMoves()
         {

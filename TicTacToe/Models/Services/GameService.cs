@@ -24,6 +24,7 @@ namespace TicTacToe.Models
                 gameLogic.CellState[turn.Cell] = turn.IsPlayer ? CellValue.USER : CellValue.BOT;
             }
         }
+
         public int NewGame(int? userId)
         {
             var user = _db.Users.Get(userId);
@@ -39,6 +40,7 @@ namespace TicTacToe.Models
             }
             return 0;
         }
+
         public void IfBotMoveFirst(int? gameId)
         {
             if (!IsPlayerFirst)
@@ -53,6 +55,7 @@ namespace TicTacToe.Models
                 }
             }
         }
+
         public Game.State Move(int? gameId, int position)
         {
             var game = _db.Games.Get(gameId);
@@ -62,13 +65,11 @@ namespace TicTacToe.Models
                 FillField(game);
             }
 
-
-            //var availableMoves = gameLogic.GetAvailableMoves();
-            //int cell = availableMoves[new Random().Next(availableMoves.Count)];
             if (!gameLogic.UserMove(position))
             {
                 return Game.State.NotFinish;
             }
+
             var turn = new Turn(true, position);
             game.Turns.Add(turn);
 

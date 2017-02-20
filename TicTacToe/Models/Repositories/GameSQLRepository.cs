@@ -14,7 +14,7 @@ namespace TicTacToe.Repositories
         {
             _db = db;
         }
-        // Возможно пригодится ещё и Find
+
         #region Общение с БД
         public void Create(Game game)
         {

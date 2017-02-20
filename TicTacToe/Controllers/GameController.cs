@@ -2,30 +2,27 @@
 using Microsoft.Ajax.Utilities;
 using TicTacToe.Models;
 using TicTacToe.Repositories;
-using System;
-
 namespace TicTacToe
 {
     public class GameController : Controller
     {
-        private LoginService LS;
-        private GameService GS;
-        private HistoryService HS;
+        private LoginService loginService;
+        private GameService gameService;
+        private HistoryService historyService;
 
         public GameController()
         {
             IUnitOfWork _db = new EfUnitOfWork("tttDBConnection");
-            LS = new LoginService(_db);
-            GS = new GameService(_db);
-            HS = new HistoryService(_db);
-
+            loginService = new LoginService(_db);
+            gameService = new GameService(_db);
+            historyService = new HistoryService(_db);
         }
 
         public GameController(LoginService ls, GameService gs, HistoryService hs)
         {
-            LS = ls;
-            GS = gs;
-            HS = hs;
+            loginService = ls;
+            gameService = gs;
+            historyService = hs;
         }
 
         [HttpGet]
@@ -33,18 +30,14 @@ namespace TicTacToe
         {
             return View("Login");
         }
-
         [HttpPost]
         public ActionResult Login(User user)
         {
             if (ModelState.IsValid)
             {
-                var userId = LS.Login(user);
-                if (user.Name != "")
-                {
-                    Session["user.Name"] = user.Name;
-                    Session["user.Id"] = userId;
-                }
+                var userId = loginService.Login(user);
+                Session["user.Name"] = user.Name;
+                Session["user.Id"] = userId;
                 return RedirectToAction("NewGame", new {Id = userId});
             }
             return View(user);
@@ -60,13 +53,12 @@ namespace TicTacToe
 
         public ActionResult NewGame(int? id)
         {
-            Session["BotStart"] = !GS.IsPlayerFirst;
             if (Session["user.Name"] == null || Session["user.Id"] == null)
             {
                 return RedirectToAction("Login");
             }
 
-            var gameId = GS.NewGame(id);
+            var gameId = gameService.NewGame(id);
             return RedirectToAction("Game", new {Id = gameId});
         }
 
@@ -76,20 +68,19 @@ namespace TicTacToe
             {
                 return RedirectToAction("Login");
             }
-            
             ViewBag.Id = id;
-            
             if (Request.IsAjaxRequest() && !Request.Params["position"].IsNullOrWhiteSpace())
             {
                 var position = int.Parse(Request.Params["position"]);
-                ViewBag.Status = GS.Move(id, position);
-                ViewBag.State = GS.gameLogic.CellState;
+                ViewBag.Status = gameService.Move(id, position);
+                ViewBag.State = gameService.gameLogic.CellState;
 
                 return PartialView("_Game");
             }
-            GS.IfBotMoveFirst(id);
-            ViewBag.State = GS.gameLogic.CellState;
-            Session["IsPlayerFirst"] = GS.IsPlayerFirst;
+
+            gameService.IfBotMoveFirst(id);
+            ViewBag.State = gameService.gameLogic.CellState;
+            Session["IsPlayerFirst"] = gameService.IsPlayerFirst;
 
             return View();
         }
@@ -97,15 +88,15 @@ namespace TicTacToe
         public ActionResult History(int? id)
         {
             if (Session["user.Name"] == null || Session["user.Id"] == null || id == null)
+            {
                 return RedirectToAction("Login");
-
-            var userGames = HS.GetUserGame(id);
+            }
+            var userGames = historyService.GetUserGame(id);
 
             if (userGames != null)
             {
                 return View(userGames);
             }
-
             return View();
         }
     }

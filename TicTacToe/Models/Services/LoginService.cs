@@ -9,13 +9,13 @@ namespace TicTacToe.Models
         public LoginService(IUnitOfWork db) { _db = db; }
         public int Login(User user)
         {
-            User usr = _db.Users.Find(x => x.Name == user.Name).FirstOrDefault() ?? new User { Name = user.Name };
-            if (usr.Id == 0)
+            User newUser = _db.Users.Find(x => x.Name == user.Name).FirstOrDefault() ?? new User { Name = user.Name };
+            if (newUser.Id == 0)
             {
-                _db.Users.Create(usr);
+                _db.Users.Create(newUser);
                 _db.SaveDb();
             }
-            return usr.Id;
+            return newUser.Id;
         }
 
     }

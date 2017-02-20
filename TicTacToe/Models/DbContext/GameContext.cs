@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Web;
+﻿using System.Data.Entity;
 
 namespace TicTacToe.Models
 {
@@ -14,15 +10,17 @@ namespace TicTacToe.Models
         public DbSet<Game> Games { get; set; }
         public DbSet<Turn> Turns { get; set; }
 
-        public GameContext(string nameOrConnectionString) : base(nameOrConnectionString) { }
+        public GameContext(string nameOrConnectionString) : base(nameOrConnectionString)
+        {
+            Database.SetInitializer<GameContext>(new DbInitializer());
+        }
     }
 
-    /*public class DbInitializer : DropCreateDatabaseAlways<GameContext>
+    public class DbInitializer : DropCreateDatabaseIfModelChanges<GameContext>
     {
         protected override void Seed(GameContext context)
         {
-            context.Users.Add(new User { Name = "TestUser"});
             base.Seed(context);
         }
-    }*/
+    }
 }

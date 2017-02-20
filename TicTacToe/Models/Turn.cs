@@ -6,6 +6,7 @@
         public bool IsPlayer { get; set; }
         public int GameID { get; set; }
         public int Cell { get; set; }
+
         public Turn()
         {
 
