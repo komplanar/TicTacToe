@@ -2,5 +2,5 @@ packages/
 obj/
 .vs/
 bin/
-AppData/
+App_Data/
 PublishProfiles/
