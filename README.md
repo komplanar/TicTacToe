@@ -1,29 +1,16 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+Для запуска необходимо:
+1) Разархивировать архив (или скачать файлы из архива с репозитория)
+2) Запустить TictacToe.sln (откроется в Visual Studio)
+3) В обозревателе решений, нажать правой кнопкой на решении -> Восстановить пакеты (restore packages)
+4) В обозревателе решений, нажать правой кнопкой на решении -> Собрать решение
+5) ctrl + F5 (Может быть достаточно только этого пункта для развертывания приложения, вместо 3-5)
 
-### What is this repository for? ###
-
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
-
-### How do I get set up? ###
-
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+Информация по приложению:
+1) Авторизация по имени пользователя, без регистрации (любые символы, количество от 3 до 15)
+2) Зайдя с именем ранее существовавшего пользователя вы увидете его историю, даже если играли не вы.
+3) Пользователь ходит первым или вторым (случайно)
+4) При переходе к истории, новой игре или при прерывании игры иным способом - идет
+сохранение в исотрию со статусом "Game canceled". Иначе игра сохраняется со своим результатом
+5) История отображается в порядке от самых новых записей к старым.
